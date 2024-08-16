@@ -1,0 +1,35 @@
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  Usage:
+  {% render 'collection-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+{% liquid
+  assign collection_for_option_grouping = false
+
+  if product.metafields.custom.collection_for_option_grouping
+    assign collection_for_option_grouping = product.metafields.custom.collection_for_option_grouping
+  endif
+%}
+
+<collection-variant-options
+  id="variant-selects-{{ section.id }}"
+  data-section="{{ section.id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if collection_for_option_grouping %}
+    <fieldset class="js product-form__input product-form__input--pill">
+      <legend class="form__label">Color</legend>
+      {% render 'collection-variant-options',
+        collection_for_option_grouping: collection_for_option_grouping,
+        block: block
+      %}
+    </fieldset>
+  {% endif %}
+</collection-variant-options>
+
+<script src="{{ 'collection-variant-options.js' | asset_url }}" defer="defer"></script>

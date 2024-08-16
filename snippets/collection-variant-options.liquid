@@ -1,0 +1,51 @@
+{% comment %}
+  Renders product variant options
+
+  Accepts:
+  - product: {Object} product object.
+  - option: {Object} current product_option object.
+  - block: {Object} block object.
+  - picker_type: {String} type of picker to dispay
+
+
+  Usage:
+  {% render 'collection-variant-options',
+    product: product,
+    option: option,
+    block: block
+    picker_type: picker_type
+  %}
+{% endcomment %}
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+-%}
+
+{% for product_from_collection in collections[collection_for_option_grouping].products %}
+  {%- capture input_id -%}
+    {{ section.id }}-{{ product_from_collection.handle }}-{{ forloop.index0 }}
+  {%- endcapture -%}
+
+  {% assign selected = false %}
+
+  {% if product_from_collection.title == product.title %}
+    {% assign selected = true %}
+  {% endif %}
+
+  <input
+    type="radio"
+    id="{{ input_id }}"
+    name="{{ collection_for_option_grouping | escape }}"
+    value="{{ product_from_collection.handle | escape }}"
+    form="{{ product_form_id }}"
+    {% if selected %}
+      checked
+    {% endif %}
+    {% if option_disabled %}
+      class="disabled"
+    {% endif %}
+    {{ input_dataset }}
+  >
+  <label for="{{ input_id }}">
+    {{ product_from_collection.title -}}
+  </label>
+{% endfor %}

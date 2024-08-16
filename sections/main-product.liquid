@@ -16,7 +16,7 @@
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
-  {% unless product.has_only_default_variant %}
+  {% unless product.has_only_default_variant and product.metafields.custom.collection_for_option_grouping == '' %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
     {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
     {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
@@ -462,6 +462,12 @@
                 %}
 
               {%- when 'variant_picker' -%}
+                {% render 'collection-variant-picker',
+                  product: product,
+                  block: block,
+                  product_form_id: product_form_id
+                %}
+
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
                 {%- render 'buy-buttons',
