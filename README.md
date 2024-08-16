@@ -1,9 +1,11 @@
-This is a shopify theme based on Dawn which adds functionality to use products as color options
+## Description
 
-## Getting Started
+This is a shopify theme based on Dawn which adds functionality to use products as color options
 
 The functionality is based on a mutual work of a metafield "Collection For Option Grouping" (custom.collection_for_option_grouping) and a
 newly created collection.
+
+## Usage
 
 The products which are supposed to take roles of the options are assigned to the same Collection and the collection's handle is inputted to the
 "custom.collection_for_option_grouping" metafield of these products.
